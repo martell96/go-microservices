@@ -14,15 +14,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.19
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+          cache: true
 
-    - name: Build
-      run: go build -v ./cmd/web/...
+      - name: Build
+        run: go build -v ./cmd/web/...
 
-    - name: Test
-      run: go test -v ./cmd/web/...
+#    - name: Test
+#      run: go test -v ./cmd/web/...
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          path: main
+          retention-days: 1
